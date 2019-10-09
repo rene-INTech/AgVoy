@@ -13,7 +13,7 @@
 
     <ul>
         {% for region in regions_list %}
-        <li>{{ region.name }}:{{ region.rooms|length }} annonces disponibles</li>
+            <li><a href="{{ path('region', {id:region.id}) }}" >{{ region.name }}</a>:{{ region.rooms|length }} annonces disponibles</li>
         {% endfor %}
     </ul>
 </div>
