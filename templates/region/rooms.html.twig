@@ -9,12 +9,12 @@
     </style>
 
     <div class="example-wrapper">
-        <h1>Liste des chambres pour la région {{ region_name }}:</h1>
+        <h1>Liste des chambres pour la région {{ region.name }} ({{ region.country }}):</h1>
 
         {{ rooms_list|length }} annonces trouvées:
         <ul>
             {% for room in rooms_list %}
-            <li>{{ room.summary }}</li>
+                <li><a href="{{ path('public_room_show', {id:room.id}) }}"> {{ room.summary }}</a></li>
             {% endfor %}
         </ul>
     </div>

@@ -31,7 +31,7 @@ class RegionController extends AbstractController
         $region = $this->getDoctrine()->getRepository(Region::class)->find($id);
         $rooms = $region->getRooms();
         return $this->render('region/rooms.html.twig', [
-            'region_name' =>$region->getName(),
+            'region' =>$region,
             'rooms_list' => $rooms,
             ]);
     }
