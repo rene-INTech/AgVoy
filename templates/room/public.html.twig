@@ -20,7 +20,7 @@
             <li>Capacité: {{ room.capacity }} personnes</li>
             <li>Prix: {{ room.price }}€</li>
             <li>Adresse: {{ room.address }} (
-                {% for region in room.regions %}{#TODO: vérifier que cette syntaxe de for est correcte#}
+                {% for region in room.regions %}{
                     {{ region.name }}
                     {% if not loop.last %}
                         ,
