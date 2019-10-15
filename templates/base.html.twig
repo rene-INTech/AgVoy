@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
+
+        <!-- Affichage en fonction de la taille de l'ecran-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
             <!-- Bootstrap core CSS -->
@@ -25,7 +29,23 @@
                 </ul>
             </div>
         </nav>
-        {% block body %}{% endblock %}
+        <div class="container">
+            {% block body %}
+                <div class="row">
+                    <div class="col text-center">
+                        <h1>
+                            {% block h1 %}{% endblock %}
+                        </h1>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col">
+                       {% block content %}{% endblock %}
+                    </div>
+                </div>
+            {% endblock %}
+        </div>
         {% block javascripts %}
             <!-- Bootstrap core JavaScript -->
             <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
