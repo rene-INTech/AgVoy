@@ -1,13 +1,12 @@
+#fichier de description des menus
 bootstrap_menu:
   menus:
-    main:
-      items:
-        todos:
-          label: 'Tasks'
-          route: 'todo_list'
-        actives:
-          label: 'Active tasks'
-          route: 'todo_active_list'
+    main: #menu principal
+      items: #ne contient pour l'instant qu'un seul lien 'Regions'
+        regions:
+          label: 'Regions'
+          route: 'region_index'
+#les menus suivants sont copiés du prejet 'ToDo'
     anonymousaccount:
       items:
         account:
