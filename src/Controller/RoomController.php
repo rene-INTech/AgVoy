@@ -14,7 +14,7 @@ class RoomController extends AbstractController
      * @param $id
      * @return Response
      */
-    public function showRoom($id)
+    public function showRoom($id) //Affiche les caractéristiques d'une chambre visibles par son propriétaire
     {
         return $this->render('room/private.html.twig', [
             'room' => $this->getDoctrine()->getRepository(Room::class)->find($id),
@@ -26,7 +26,7 @@ class RoomController extends AbstractController
      * @param $id
      * @return Response
      */
-    public function showRoomPublic($id)
+    public function showRoomPublic($id) //Affiche les caractéristiques d'une chambre pour le public
     {
         return $this->render('room/public.html.twig', [
             'room' => $this->getDoctrine()->getRepository(Room::class)->find($id),
