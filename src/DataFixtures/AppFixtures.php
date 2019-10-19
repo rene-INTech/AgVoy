@@ -11,7 +11,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 class AppFixtures extends Fixture
 {
     // définit un nom de référence pour une instance de Region
-    public const IDF_REGION_REFERENCE = 'idf-region';
+    public const IDF_REGION_REFERENCE = 'idf-region.back';
     public const INT = "9 rue Charles Fourrier";
 
     public function load(ObjectManager $manager)
@@ -42,7 +42,7 @@ class AppFixtures extends Fixture
         $room = new Room();
         $room->setSummary("Beau poulailler ancien à Évry");
         $room->setDescription("très joli espace sur paille");
-        //$room->addRegion($region);
+        //$room->addRegion($region.back);
         // On peut plutôt faire une référence explicite à la référence
         // enregistrée précédamment, ce qui permet d'éviter de se
         // tromper d'instance de Region :

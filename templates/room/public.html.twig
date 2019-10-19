@@ -24,5 +24,14 @@
             )
         </li>
         <li>Propriétaire: {{ room.owner.familyName }} {{ room.owner.firstname }}</li>
+        <li>
+            <a href="{{ path('room_like', {id:room.id}) }}">
+                {% if liked %}
+                    Je n'aime plus cette annonce
+                {% else %}
+                    J'aime cette annonce
+                {% endif %}
+            </a>
+        </li>
     </ul>
 {% endblock %}

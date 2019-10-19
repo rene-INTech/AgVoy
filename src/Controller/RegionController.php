@@ -3,36 +3,92 @@
 namespace App\Controller;
 
 use App\Entity\Region;
-use App\Entity\Room;
+use App\Form\RegionType;
+use App\Repository\RegionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/region")
+ */
 class RegionController extends AbstractController
 {
     /**
-     * @Route("/region", name="region_index")
+     * @Route("/", name="region_index", methods={"GET"})
      */
-    public function index() //Affiche la liste de toutes les régions de la base de données
+    public function index(RegionRepository $regionRepository): Response
     {
-        $regions = $this->getDoctrine()->getRepository(Region::class)->findAll(); //récupère tous les objets de type 'Region'
-
         return $this->render('region/index.html.twig', [
-            'regions_list' => $regions,
+            'regions' => $regionRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("/region/{id}", name="region")
-     * @param int $id
-     * @return Response
+     * @Route("/new", name="region_new", methods={"GET","POST"})
      */
-    public function listRooms(int $id){ //Affiche la liste des chambres de la région identifiée par $id
-        $region = $this->getDoctrine()->getRepository(Region::class)->find($id); //récupère l'objet de type 'Region' ayant l'identifiant $id
-        $rooms = $region->getRooms();//récupère la liste des chambres de la region $region
-        return $this->render('region/rooms.html.twig', [
-            'region' =>$region,
-            'rooms_list' => $rooms,
-            ]);
+    public function new(Request $request): Response
+    {
+        $region = new Region();
+        $form = $this->createForm(RegionType::class, $region);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($region);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('region_index');
+        }
+
+        return $this->render('region/new.html.twig', [
+            'region' => $region,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="region_show", methods={"GET"})
+     */
+    public function show(Region $region): Response
+    {
+        return $this->render('region/show.html.twig', [
+            'region' => $region,
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/edit", name="region_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Region $region): Response
+    {
+        $form = $this->createForm(RegionType::class, $region);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('region_index');
+        }
+
+        return $this->render('region/edit.html.twig', [
+            'region' => $region,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="region_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Region $region): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$region->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($region);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('region_index');
     }
 }

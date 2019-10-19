@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Regions{% endblock %}
+
+{% block h1 %}Liste des régions{% endblock %}
+
+{% block content %}
+    <ul>
+        {% for region in regions_list %}
+            {% set nb_rooms = region.rooms|length %}
+            <li><a href="{{ path('region.back', {id:region.id}) }}" >{{ region.name }}</a>:
+                {% if nb_rooms == 0 %}
+                    Aucune annonce disponible
+                {% elseif nb_rooms == 1 %}
+                    1 annonce disponible
+                {% else %}
+                    {{ nb_rooms }} annonces disponibles
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
