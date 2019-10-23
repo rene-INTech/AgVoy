@@ -1,14 +1,19 @@
 #fichier de description des menus
 bootstrap_menu:
   menus:
-    main: #menu principal
+    left: #affiché à gauche
       items:
         regions:
           label: 'Regions'
           route: 'region_index'
-        likes:
-          label:  'Annonces favorites'
-          route:  'liked_rooms'
+    right:
+      items:
+        compte:
+          label: 'Mon Compte'
+          items:
+            likes:
+              label:  'Annonces favorites'
+              route:  'liked_rooms'
 #les menus suivants sont copiés du prejet 'ToDo'
     anonymousaccount:
       items:

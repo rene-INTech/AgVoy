@@ -25,7 +25,10 @@
 
             <div class="collapse navbar-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav mr-auto">
-                    {{ render_bootstrap_menu('main') }}
+                    {{ render_bootstrap_menu('left') }}
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    {{ render_bootstrap_menu('right') }}
                 </ul>
             </div>
         </nav>
