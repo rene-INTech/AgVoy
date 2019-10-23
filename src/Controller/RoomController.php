@@ -48,9 +48,12 @@ class RoomController extends AbstractController
     /**
      * @Route("/room/book/{id}", name="room_book")
      * @param $id
+     * @return RedirectResponse
      */
     public function book($id){
-        $room = $this->getDoctrine()->getRepository(Room::class)->find($id);
+        return $this->redirectToRoute('reservation_new', [
+            'id_room'=>$id,
+        ]);
     }
 
     /**
