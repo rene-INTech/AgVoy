@@ -8,7 +8,7 @@
     <ul>
         {% for region in regions_list %}
             {% set nb_rooms = region.rooms|length %}
-            <li><a href="{{ path('region.back', {id:region.id}) }}" >{{ region.name }}</a>:
+            <li><a href="{{ path('region_show', {id:region.id}) }}" >{{ region.name }}</a>:
                 {% if nb_rooms == 0 %}
                     Aucune annonce disponible
                 {% elseif nb_rooms == 1 %}
