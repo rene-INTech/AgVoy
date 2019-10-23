@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block h1 %}Vos annonces préférées{% endblock %}
+
+{% block content %}
+    {% if rooms is empty %}
+        Vous n'avez aucune annonce favorite
+    {% else %}
+        <ul>
+            {% for room in rooms %}
+                <li><a href="{{ path('public_room_show', {id:room.id}) }}">{{ room.summary }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

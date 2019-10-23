@@ -2,10 +2,13 @@
 bootstrap_menu:
   menus:
     main: #menu principal
-      items: #ne contient pour l'instant qu'un seul lien 'Regions'
+      items:
         regions:
           label: 'Regions'
           route: 'region_index'
+        likes:
+          label:  'Annonces favorites'
+          route:  'liked_rooms'
 #les menus suivants sont copiés du prejet 'ToDo'
     anonymousaccount:
       items:
