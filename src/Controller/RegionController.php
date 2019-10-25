@@ -13,6 +13,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class RegionController extends AbstractController
 {
     /**
+     * @Route("/", name="home")
+     */
+    public function welcome(){
+        return $this->redirectToRoute('region_public_index');
+    }
+
+
+    /**
      * @Route("/region/{id}", name="region_public_show", methods={"GET"})
      * @param $id
      * @return Response
