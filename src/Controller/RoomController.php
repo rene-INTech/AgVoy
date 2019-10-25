@@ -18,7 +18,7 @@ class RoomController extends AbstractController
      */
     public function index(RoomRepository $roomRepository): Response
     {
-        return $this->render('room/index.html.twig', [
+        return $this->render('room/backoffice/index.html.twig', [
             'rooms' => $roomRepository->findAll(),
         ]);
     }
@@ -40,7 +40,7 @@ class RoomController extends AbstractController
             return $this->redirectToRoute('room_index');
         }
 
-        return $this->render('room/new.html.twig', [
+        return $this->render('room/backoffice/new.html.twig', [
             'room' => $room,
             'form' => $form->createView(),
         ]);
@@ -51,7 +51,7 @@ class RoomController extends AbstractController
      */
     public function show(Room $room): Response
     {
-        return $this->render('room/show.html.twig', [
+        return $this->render('room/backoffice/show.html.twig', [
             'room' => $room,
         ]);
     }
@@ -70,7 +70,7 @@ class RoomController extends AbstractController
             return $this->redirectToRoute('room_index');
         }
 
-        return $this->render('room/edit.html.twig', [
+        return $this->render('room/backoffice/edit.html.twig', [
             'room' => $room,
             'form' => $form->createView(),
         ]);
@@ -143,7 +143,7 @@ class RoomController extends AbstractController
     public function listLiked(){
         $liked = $this->get('session')->get('likes');
         $rooms = $this->getDoctrine()->getRepository(Room::class)->findBy(["id"=>$liked]);
-        return $this->render('room/liked.html.twig',[
+        return $this->render('room/frontoffice/liked.html.twig',[
             'rooms' => $rooms,
         ]);
     }
@@ -163,8 +163,8 @@ class RoomController extends AbstractController
             $liked = false;
         }
 
-        return $this->render('room/public.html.twig', [
-            'room.back' => $room,
+        return $this->render('room/frontoffice/show.html.twig', [
+            'room' => $room,
             'liked' => $liked,
         ]);
     }

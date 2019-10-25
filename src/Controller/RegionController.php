@@ -13,11 +13,33 @@ use Symfony\Component\Routing\Annotation\Route;
 class RegionController extends AbstractController
 {
     /**
+     * @Route("/region/{id}", name="region_public_show", methods={"GET"})
+     * @param $id
+     * @return Response
+     */
+    public function publicShow($id){
+        $region = $this->getDoctrine()->getRepository(Region::class)->find($id);
+        return $this->render('region/frontoffice/rooms.html.twig', [
+            'region' => $region,
+            'rooms' => $region->getRooms(),
+        ]);
+    }
+
+    /**
+     * @Route("/region/", name="region_public_index", methods={"GET"})
+     */
+    public function publicIndex(){
+        return $this->render('region/frontoffice/index_public.html.twig', [
+            'regions' => $this->getDoctrine()->getRepository(Region::class)->findAll(),
+        ]);
+    }
+
+    /**
      * @Route("/backoffice/region/", name="region_index", methods={"GET"})
      */
     public function index(RegionRepository $regionRepository): Response
     {
-        return $this->render('region/index.html.twig', [
+        return $this->render('region/backoffice/index.html.twig', [
             'regions' => $regionRepository->findAll(),
         ]);
     }
@@ -39,7 +61,7 @@ class RegionController extends AbstractController
             return $this->redirectToRoute('region_index');
         }
 
-        return $this->render('region/new.html.twig', [
+        return $this->render('region/backoffice/new.html.twig', [
             'region' => $region,
             'form' => $form->createView(),
         ]);
@@ -50,7 +72,7 @@ class RegionController extends AbstractController
      */
     public function show(Region $region): Response
     {
-        return $this->render('region/show.html.twig', [
+        return $this->render('region/backoffice/show.html.twig', [
             'region' => $region,
         ]);
     }
@@ -69,7 +91,7 @@ class RegionController extends AbstractController
             return $this->redirectToRoute('region_index');
         }
 
-        return $this->render('region/edit.html.twig', [
+        return $this->render('region/backoffice/edit.html.twig', [
             'region' => $region,
             'form' => $form->createView(),
         ]);

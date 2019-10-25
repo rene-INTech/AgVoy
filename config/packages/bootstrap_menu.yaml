@@ -5,7 +5,7 @@ bootstrap_menu:
       items:
         regions:
           label: 'Regions'
-          route: 'region_index'
+          route: 'region_public_index'
     right:
       items:
         compte:

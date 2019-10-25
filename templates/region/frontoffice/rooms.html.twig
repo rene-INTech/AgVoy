@@ -5,9 +5,9 @@
 {% block h1 %}Liste des chambres pour la région {{ region.name }} ({{ region.country }}):{% endblock %}
 
 {% block content %}
-    {{ rooms_list|length }} annonces trouvées:
+    {{ rooms|length }} annonces trouvées:
     <ul>
-        {% for room in rooms_list %}
+        {% for room in rooms %}
             <li><a href="{{ path('public_room_show', {id:room.id}) }}"> {{ room.summary }}</a></li>
         {% endfor %}
     </ul>
