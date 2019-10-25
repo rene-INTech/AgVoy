@@ -1,20 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RoomController!{% endblock %}
+{% block title %}Room index{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Room index</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Summary</th>
+                <th>Description</th>
+                <th>Capacity</th>
+                <th>Superficy</th>
+                <th>Price</th>
+                <th>Address</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for room in rooms %}
+            <tr>
+                <td>{{ room.id }}</td>
+                <td>{{ room.summary }}</td>
+                <td>{{ room.description }}</td>
+                <td>{{ room.capacity }}</td>
+                <td>{{ room.superficy }}</td>
+                <td>{{ room.price }}</td>
+                <td>{{ room.address }}</td>
+                <td>
+                    <a href="{{ path('room_show', {'id': room.id}) }}">show</a>
+                    <a href="{{ path('room_edit', {'id': room.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/rene/projetPHP/agvoy-app-03/src/Controller/RoomController.php'|file_link(0) }}">src/Controller/RoomController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/rene/projetPHP/agvoy-app-03/templates/room/index.html.twig'|file_link(0) }}">templates/room/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <a href="{{ path('room_new') }}">Create new</a>
 {% endblock %}

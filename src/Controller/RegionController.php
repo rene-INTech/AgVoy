@@ -10,13 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/region")
- */
 class RegionController extends AbstractController
 {
     /**
-     * @Route("/", name="region_index", methods={"GET"})
+     * @Route("/backoffice/region/", name="region_index", methods={"GET"})
      */
     public function index(RegionRepository $regionRepository): Response
     {
@@ -26,7 +23,7 @@ class RegionController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="region_new", methods={"GET","POST"})
+     * @Route("/backoffice/region/new", name="region_new", methods={"GET","POST"})
      */
     public function new(Request $request): Response
     {
@@ -49,7 +46,7 @@ class RegionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="region_show", methods={"GET"})
+     * @Route("/backoffice/region/{id}", name="region_show", methods={"GET"})
      */
     public function show(Region $region): Response
     {
@@ -59,7 +56,7 @@ class RegionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="region_edit", methods={"GET","POST"})
+     * @Route("/backoffice/region/{id}/edit", name="region_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Region $region): Response
     {
@@ -79,7 +76,7 @@ class RegionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="region_delete", methods={"DELETE"})
+     * @Route("/backoffice/region/{id}", name="region_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Region $region): Response
     {

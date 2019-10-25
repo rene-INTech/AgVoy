@@ -42,7 +42,7 @@ class AppFixtures extends Fixture
         $room = new Room();
         $room->setSummary("Beau poulailler ancien à Évry");
         $room->setDescription("très joli espace sur paille");
-        //$room->addRegion($region.back);
+        //$room.back->addRegion($region.back);
         // On peut plutôt faire une référence explicite à la référence
         // enregistrée précédamment, ce qui permet d'éviter de se
         // tromper d'instance de Region :

@@ -3,24 +3,104 @@
 namespace App\Controller;
 
 use App\Entity\Room;
+use App\Form\RoomType;
+use App\Repository\RoomRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RoomController extends AbstractController
 {
     /**
-     * @Route("/owner/room/{id}", name="room_show")
-     * @param $id
-     * @return Response
+     * @Route("/owner/room/", name="room_index", methods={"GET"})
      */
-    public function showRoom($id) //Affiche les caractéristiques d'une chambre visibles par son propriétaire
+    public function index(RoomRepository $roomRepository): Response
     {
-        return $this->render('room/private.html.twig', [
-            'room' => $this->getDoctrine()->getRepository(Room::class)->find($id),
+        return $this->render('room/index.html.twig', [
+            'rooms' => $roomRepository->findAll(),
         ]);
     }
+
+    /**
+     * @Route("/owner/room/new", name="room_new", methods={"GET","POST"})
+     */
+    public function new(Request $request): Response
+    {
+        $room = new Room();
+        $form = $this->createForm(RoomType::class, $room);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($room);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('room_index');
+        }
+
+        return $this->render('room/new.html.twig', [
+            'room' => $room,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/owner/room/{id}", name="room_show", methods={"GET"})
+     */
+    public function show(Room $room): Response
+    {
+        return $this->render('room/show.html.twig', [
+            'room' => $room,
+        ]);
+    }
+
+    /**
+     * @Route("/owner/room/{id}/edit", name="room_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, Room $room): Response
+    {
+        $form = $this->createForm(RoomType::class, $room);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('room_index');
+        }
+
+        return $this->render('room/edit.html.twig', [
+            'room' => $room,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="room_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Room $room): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$room->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($room);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('room_index');
+    }
+
+//    /**
+//     * @Route("/owner/room/{id}", name="room_show")
+//     * @param $id
+//     * @return Response
+//     */
+//    public function showRoom($id) //Affiche les caractéristiques d'une chambre visibles par son propriétaire
+//    {
+//        return $this->render('room/private.html.twig', [
+//            'room' => $this->getDoctrine()->getRepository(Room::class)->find($id),
+//        ]);
+//    }
 
     /**
      * @Route("/room/like/{id}", name="room_like")
@@ -84,7 +164,7 @@ class RoomController extends AbstractController
         }
 
         return $this->render('room/public.html.twig', [
-            'room' => $room,
+            'room.back' => $room,
             'liked' => $liked,
         ]);
     }
