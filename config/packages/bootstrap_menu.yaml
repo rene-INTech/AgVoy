@@ -6,7 +6,8 @@ bootstrap_menu:
         regions:
           label: 'Regions'
           route: 'region_public_index'
-    right:
+
+    right: #ce menu n'est jamais utilisé (hardcoded in base.html.twig), car il ne permet pas l'alignement de dropdowns à droite
       items:
         compte:
           label: 'Mon Compte'

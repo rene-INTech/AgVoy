@@ -9,70 +9,81 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
             <!-- Bootstrap core CSS -->
-            <link href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+            <link href="{{ asset('startbootstrap-shop-homepage-gh-pages/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
             <!-- Custom styles for this template -->
-            <link href="{{ asset('css/shop-homepage.css') }}" rel="stylesheet">
+            <link href="{{ asset('startbootstrap-shop-homepage-gh-pages/css/shop-homepage.css') }}" rel="stylesheet">
+
+            <link href="{{ asset('style.css') }}" rel="stylesheet"/>
         {% endblock %}
     </head>
     <body>
-        <!-- Barre de menu -->
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="#">Menu</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-                    aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <!-- Barre de menu -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#">Menu</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav mr-auto">
-                    {{ render_bootstrap_menu('left') }}
-                </ul>
-                <ul class="navbar-nav ml-auto">
-                    {{ render_bootstrap_menu('right') }}
-                    <div class="col-1">
-
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                {{ render_bootstrap_menu('left') }}
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                {#{{ render_bootstrap_menu('right') }}#}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#">Mon Compte</a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="{{ path('liked_rooms') }}">Annonces favorites</a>
                     </div>
-                </ul>
-            </div>
-        </nav>
-
-        {%  block alerts %}
-            {% for type, messages in app.session.flashBag.all %}
-                {% for message in messages %}
-                    {%if type == 'error'%} {% set type = 'danger' %} {%endif%}
-                    {%if type == 'message'%} {% set type = 'info' %} {%endif%}
-                    <div class="alert alert-{{ type }} alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert">
-                            <span aria-hidden="true">&times;</span>
-                            <span class="sr-only">Close</span>
-                        </button>
-                        <p class="text-center">{{ message|raw }}</p>
-                    </div>
-                {% endfor %}
-            {% endfor %}
-        {% endblock %} {# alerts #}
-
-        <div class="container">
-            {% block body %}
-                <div class="row">
-                    <div class="col text-center">
-                        <h1>
-                            {% block h1 %}{% endblock %}
-                        </h1>
-                    </div>
-                </div>
-                <br/>
-                <div class="row">
-                    <div class="col">
-                       {% block content %}{% endblock %}
-                    </div>
-                </div>
-            {% endblock %}
+                </li>
+            </ul>
         </div>
-        {% block javascripts %}
-            <!-- Bootstrap core JavaScript -->
-            <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-            <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-        {% endblock %}
+    </nav>
+
+    {%  block alerts %}
+        {% for type, messages in app.session.flashBag.all %}
+            {% for message in messages %}
+                {%if type == 'error'%} {% set type = 'danger' %} {%endif%}
+                {%if type == 'message'%} {% set type = 'info' %} {%endif%}
+                <div class="alert alert-{{ type }} alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <p class="text-center">{{ message|raw }}</p>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endblock %} {# alerts #}
+
+    <div class="container-fluid no-gutters h-100">
+        <div class="row h-100">
+            <div class="col-2" id="left_margin"></div>
+            <div class="col">
+                {% block body %}
+                    <div class="row">
+                        <div class="col text-center">
+                            <h1>
+                                {% block h1 %}{% endblock %}
+                            </h1>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col">
+                            {% block content %}{% endblock %}
+                        </div>
+                    </div>
+                {% endblock %}
+            </div>
+            <div class="col-2" id="right_margin"></div>
+        </div>
+    </div>
+    {% block javascripts %}
+        <!-- Bootstrap core JavaScript -->
+        <script src="{{ asset('startbootstrap-shop-homepage-gh-pages/vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('startbootstrap-shop-homepage-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    {% endblock %}
     </body>
 </html>
