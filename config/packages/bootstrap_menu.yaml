@@ -15,7 +15,7 @@ bootstrap_menu:
             likes:
               label:  'Annonces favorites'
               route:  'liked_rooms'
-#les menus suivants sont copiés du prejet 'ToDo'
+#les menus suivants sont copiés du projet 'ToDo'
     anonymousaccount:
       items:
         account:

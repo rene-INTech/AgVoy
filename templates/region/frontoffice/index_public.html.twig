@@ -5,18 +5,17 @@
 {% block h1 %}Liste des régions{% endblock %}
 
 {% block content %}
-    <ul>
-        {% for region in regions %}
-            {% set nb_rooms = region.rooms|length %}
-            <li><a href="{{ path('region_public_show', {id:region.id}) }}" >{{ region.name }}</a>:
-                {% if nb_rooms == 0 %}
-                    Aucune annonce disponible
-                {% elseif nb_rooms == 1 %}
-                    1 annonce disponible
-                {% else %}
-                    {{ nb_rooms }} annonces disponibles
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+    {% for region in regions %}
+        {% set nb_rooms = region.rooms|length %}
+        <a class="btn-outline-dark" href="{{ path('region_public_show', {id:region.id}) }}" >{{ region.name }}:
+            {% if nb_rooms == 0 %}
+                Aucune annonce disponible
+            {% elseif nb_rooms == 1 %}
+                1 annonce disponible
+            {% else %}
+                {{ nb_rooms }} annonces disponibles
+            {% endif %}
+        </a>
+        <br>
+    {% endfor %}
 {% endblock %}
