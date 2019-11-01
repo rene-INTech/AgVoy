@@ -1,6 +1,12 @@
 body {
     background-color: #e6f2ff;
     height: 100vh;
+    font: 1.2em "Fira Sans", sans-serif;
+    line-height: 1.8em;
+}
+
+footer{
+    color: #fff;
 }
 
 #left_margin {
