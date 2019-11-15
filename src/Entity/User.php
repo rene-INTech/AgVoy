@@ -35,6 +35,16 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Client", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $client;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Owner", mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $owner;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,5 +116,39 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(Client $client): self
+    {
+        $this->client = $client;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $client->getUser()) {
+            $client->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function getOwner(): ?Owner
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(Owner $owner): self
+    {
+        $this->owner = $owner;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $owner->getUser()) {
+            $owner->setUser($this);
+        }
+
+        return $this;
     }
 }
