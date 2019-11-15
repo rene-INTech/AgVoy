@@ -37,6 +37,12 @@ class Reservation
      */
     private $nbPersonnes;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Client", inversedBy="reservations")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $client;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +92,18 @@ class Reservation
     public function setNbPersonnes(?int $nbPersonnes): self
     {
         $this->nbPersonnes = $nbPersonnes;
+
+        return $this;
+    }
+
+    public function getClient(): ?Client
+    {
+        return $this->client;
+    }
+
+    public function setClient(?Client $client): self
+    {
+        $this->client = $client;
 
         return $this;
     }
