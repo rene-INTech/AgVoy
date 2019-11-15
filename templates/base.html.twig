@@ -35,11 +35,19 @@
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#">Mon Compte</a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="{{ path('liked_rooms') }}">Annonces favorites</a>
+                        <div class="dropdown-divider"></div>
+                        {% if app.user %}
+                            <a class="dropdown-item" href="{{ path('app_logout') }}">Se déconnecter</a>
+                        {% else %}
+                            <a class="dropdown-item" href="{{ path('app_login') }}">Se connecter</a>
+                            <a class="dropdown-item" href="{{ path('app_register') }}">Créer un compte</a>
+                        {% endif %}
                     </div>
                 </li>
             </ul>
         </div>
     </nav>
+    <!-- Fin de la barre de menu-->
 
     {%  block alerts %}
         {% for type, messages in app.session.flashBag.all %}
