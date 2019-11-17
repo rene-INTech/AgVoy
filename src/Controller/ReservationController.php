@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
 use App\Entity\Reservation;
 use App\Entity\Room;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
 use Doctrine\DBAL\Types\DateTimeType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,20 +28,31 @@ class ReservationController extends AbstractController
 
     /**
      * @Route("/reservation/new/{id_room}", name="reservation_new", methods={"GET","POST"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param Request $request
      * @param $id_room
      * @return Response
      */
     public function new(Request $request, $id_room): Response
     {
+        $entityManager = $this->getDoctrine()->getManager();
         $reservation = new Reservation();
         $reservation->setRoom($this->getDoctrine()->getRepository(Room::class)->find($id_room));
+        $client = $this->getUser()->getClient();
+        if($client == null){
+            $client = new Client();
+            $entityManager->persist($client);
+            $entityManager->flush();
+            $this->getUser()->setClient($client);
+        }
+        $reservation->setClient($client);
         $form = $this->createForm(ReservationType::class, $reservation);
-        $form->remove('room.back');
+        $form->remove('room');
+        $form->remove('client');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+
             $entityManager->persist($reservation);
             $entityManager->flush();
 

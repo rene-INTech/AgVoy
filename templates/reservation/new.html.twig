@@ -5,7 +5,12 @@
 {% block body %}
     <h1>Create new Reservation</h1>
 
-    {{ include('reservation/_form.html.twig') }}
+    {{ form_start(form) }}
+    {{ form_widget(form.dateDebut) }}
+    {{ form_row(form.dateFin) }}
+    {{ form_row(form.nbPersonnes) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
 
     <a href="{{ path('reservation_index') }}">back to list</a>
+    {{ form_end(form) }}
 {% endblock %}
