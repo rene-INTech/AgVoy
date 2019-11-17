@@ -29,15 +29,13 @@ class UserFixtures extends Fixture
             $encodedPassword = $this->passwordEncoder->encodePassword($user, $plainPassword);
             $user->setUsername($email);
             $user->setPassword($encodedPassword);
-            //$user->addRole($role);
+            $user->addRole($role);
             $manager->persist($user);
         }
     }
     
     private function getUserData()
     {
-        yield ['chris@localhost','chris','ROLE_USER'];
-        yield ['anna@localhost','anna','ROLE_ADMIN'];
-        
+        yield ['root', '1toor1', 'ROLE_ADMIN'];
     }
 }

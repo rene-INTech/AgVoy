@@ -27,7 +27,17 @@
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
-                {{ render_bootstrap_menu('left') }}
+                <li class="nav-item">
+                    <a class="nav-link" href="
+                        {% if is_granted('ROLE_ADMIN') %}
+                            {{ path('region_index') }}
+                        {% else %}
+                            {{ path('region_public_index') }}
+                        {% endif %}
+                    ">
+                        Regions
+                    </a>
+                </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 {#{{ render_bootstrap_menu('right') }}#}
