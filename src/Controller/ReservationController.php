@@ -39,6 +39,8 @@ class ReservationController extends AbstractController
         $reservation = new Reservation();
         $reservation->setRoom($this->getDoctrine()->getRepository(Room::class)->find($id_room));
         $client = $this->getUser()->getClient();
+
+        //Si l'utilisateur n'est pas déjà client, il le devient
         if($client == null){
             $client = new Client();
             $entityManager->persist($client);

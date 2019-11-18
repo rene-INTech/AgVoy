@@ -140,6 +140,8 @@ class User implements UserInterface
             $client->setUser($this);
         }
 
+        $this->roles[] = 'ROLE_CLIENT';
+
         return $this;
     }
 
@@ -156,6 +158,8 @@ class User implements UserInterface
         if ($this !== $owner->getUser()) {
             $owner->setUser($this);
         }
+
+        $this->roles[] = 'ROLE_OWNER';
 
         return $this;
     }

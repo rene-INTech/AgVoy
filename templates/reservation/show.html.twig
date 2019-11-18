@@ -23,6 +23,10 @@
                 <th>NbPersonnes</th>
                 <td>{{ reservation.nbPersonnes }}</td>
             </tr>
+            <tr>
+                <th>Client</th>
+                <td>{{ reservation.client.user.username }}</td>
+            </tr>
         </tbody>
     </table>
 
