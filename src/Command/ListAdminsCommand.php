@@ -37,8 +37,10 @@ class ListAdminsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        foreach ($this->usersList->findBy(['roles'=>'ROLE_ADMIN']) as $admin){
-            $output->writeln($admin->getUsername());
+        foreach ($this->usersList->findAll() as $admin){
+            if(in_array('ROLE_ADMIN', (array)$admin->getRoles())) {
+                $output->writeln($admin->getUsername());
+            }
         }
     }
 }
