@@ -37,3 +37,8 @@ security:
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
         # - { path: ^/profile, roles: ROLE_USER }
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+        ROLE_OWNER: ROLE_USER
+        ROLE_CLIENT: ROLE_USER
