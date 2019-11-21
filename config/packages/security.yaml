@@ -42,3 +42,9 @@ security:
         ROLE_ADMIN: ROLE_USER
         ROLE_OWNER: ROLE_USER
         ROLE_CLIENT: ROLE_USER
+
+    login.user_voter:
+        class: App\Entity\UserVoter
+        tags:
+            - { name: security.voter, priority: 245 } # priority is important to override the default
+        public: false         # small performance boost
