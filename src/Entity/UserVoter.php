@@ -12,7 +12,7 @@ class UserVoter extends RoleVoter
     {
         $user = $token->getUser();
 
-        // si le user existe vraiment, on utilise la méthofe getRole, sinon on retourne un tableau vide
+        // si le user existe vraiment, on utilise la méthode getRole, sinon on retourne un tableau vide
         return $user instanceof UserInterface ?  $user->getRoles() : [];
     }
 }

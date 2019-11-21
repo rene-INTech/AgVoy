@@ -48,10 +48,10 @@
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="{{ path('liked_rooms') }}">Annonces favorites</a>
                         {% if is_granted('ROLE_OWNER') %}
-                            <a class="dropdown-item" href="#">Mes annonces</a>{#TODO: router ce lien#}
+                            <a class="dropdown-item" href="#{#TODO: router ce lien#}">Mes annonces</a>
                         {% endif %}
                         {% if is_granted('ROLE_CLIENT') %}
-                            <a class="dropdown-item" href="#">Mes reservations</a>{#TODO: router ce lien#}
+                            <a class="dropdown-item" href="#{#TODO: router ce lien#}">Mes reservations</a>
                         {% endif %}
                         <div class="dropdown-divider"></div>
                         {% if app.user %}
