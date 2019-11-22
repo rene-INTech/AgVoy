@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Room;
 use App\Form\RoomType;
 use App\Repository\RoomRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,6 +26,7 @@ class RoomController extends AbstractController
 
     /**
      * @Route("/owner/room/new", name="room_new", methods={"GET","POST"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function new(Request $request): Response
     {
@@ -40,7 +42,7 @@ class RoomController extends AbstractController
             return $this->redirectToRoute('room_index');
         }
 
-        return $this->render('room/backoffice/new.html.twig', [
+        return $this->render('room/frontoffice/new.html.twig', [
             'room' => $room,
             'form' => $form->createView(),
         ]);

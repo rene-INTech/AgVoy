@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block h1 %}Mes annonces{% endblock %}
+
+{% block content %}
+    {% if annonces is empty %}
+        Vous n'avez aucune annonce
+    {% else %}
+        <table>
+            <tr>
+                <th>
+                    Chambre
+                </th>
+            </tr>
+            {% for room in rooms %}
+                <tr>
+                    <td>
+                        <a href="{{ path('room_show', {id:room.id}) }}">{{ room.summary }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

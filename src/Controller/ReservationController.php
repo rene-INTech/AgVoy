@@ -76,7 +76,14 @@ class ReservationController extends AbstractController
      */
     public function showMyReservations() : Response
     {
-        $reservations = $this->getUser()->getClient()->getReservations();
+        $user = $this->getUser();
+        $reservations = null;
+        if($user){
+            $client = $user->getClient();
+            if($client){
+                $reservations = $client->getReservations();
+            }
+        }
         return $this->render('reservation/frontoffice/list_reservations.html.twig', [
             'reservations' => $reservations,
         ]);
