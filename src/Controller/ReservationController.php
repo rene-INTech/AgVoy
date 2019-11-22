@@ -72,6 +72,17 @@ class ReservationController extends AbstractController
     }
 
     /**
+     * @Route("/my_reservations", name="reservation_show_mines", methods={"GET"})
+     */
+    public function showMyReservations() : Response
+    {
+        $reservations = $this->getUser()->getClient()->getReservations();
+        return $this->render('reservation/frontoffice/list_reservations.html.twig', [
+            'reservations' => $reservations,
+        ]);
+    }
+
+    /**
      * @Route("/reservation/{id}", name="reservation_show", methods={"GET"})
      */
     public function show(Reservation $reservation): Response

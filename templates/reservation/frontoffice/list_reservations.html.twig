@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block h1 %}Vos réservations{% endblock %}
+
+{% block content %}
+    {% if reservations is empty %}
+        Vous n'avez aucune réservation
+    {% else %}
+        <table>
+            <tr>
+                <th>
+                    Chambre
+                </th>
+                <th>
+                    Date d'entrée
+                </th>
+                <th>
+                    Date de sortie
+                </th>
+            </tr>
+            {% for reservation in reservations %}
+                <tr>
+                    <td>
+                        <a href="{{ path('public_room_show', {id:reservation.room.id}) }}">{{ reservation.room.summary }}</a>
+                    </td>
+                    <td>
+                        {{ reservation.dateDebut|date("m/d/Y H:i") }}
+                    </td>
+                    <td>
+                        {{ reservation.dateFin|date("m/d/Y H:i") }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}
