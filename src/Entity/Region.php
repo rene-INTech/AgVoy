@@ -135,7 +135,6 @@ class Region
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     *
      * @var \DateTime
      */
     private $imageUpdatedAt;

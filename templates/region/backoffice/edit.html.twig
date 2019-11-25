@@ -5,9 +5,9 @@
 {% block body %}
     <h1>Edit Region</h1>
 
-    {{ include('region/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('region/backoffice/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('region_index') }}">back to list</a>
 
-    {{ include('region/_delete_form.html.twig') }}
+    {{ include('region/backoffice/_delete_form.html.twig') }}
 {% endblock %}
