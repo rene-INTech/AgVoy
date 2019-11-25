@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class RoomController extends AbstractController
 {
     /**
-     * @Route("/owner/room/", name="room_index", methods={"GET"})
+     * @Route("/backoffice/room/", name="room_index", methods={"GET"})
      */
     public function index(RoomRepository $roomRepository): Response
     {
