@@ -24,7 +24,7 @@ class Owner
     private $firstname;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $familyName;
 
@@ -34,7 +34,7 @@ class Owner
     private $address;
 
     /**
-     * @ORM\Column(type="string", length=2)
+     * @ORM\Column(type="string", length=2, nullable=true)
      */
     private $country;
 

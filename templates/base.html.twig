@@ -53,7 +53,7 @@
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="{{ path('liked_rooms') }}">Annonces favorites</a>
                         {% if is_granted('ROLE_OWNER') %}
-                            <a class="dropdown-item" href="#{#TODO: router ce lien#}">Mes annonces</a>
+                            <a class="dropdown-item" href="{{ path('room_show_mines') }}">Mes annonces</a>
                         {% endif %}
                         {% if is_granted('ROLE_CLIENT') %}
                             <a class="dropdown-item" href="{{ path('reservation_show_mines')}}">Mes reservations</a>

@@ -1,4 +1,17 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+Titre de l'annonce:<br>
+    {{ form_widget(form.summary) }}<br>
+Description de la chambre:<br>
+    {{ form_widget(form.description) }}<br>
+Adresse de la chambre:<br>
+    {{ form_widget(form.address) }}<br>
+Région.s:<br>
+    {{ form_widget(form.regions) }}<br>
+Prix par nuitée:<br>
+    {{ form_widget(form.price)}}€<br>
+Superficie de la chambre:<br>
+    {{ form_widget(form.superficy)}}m²<br>
+Nombre de places dans la chambre:<br>
+    {{ form_widget(form.capacity) }}personnes<br>
+    <button class="btn">{{ button_label|default('Ajouter') }}</button>
 {{ form_end(form) }}

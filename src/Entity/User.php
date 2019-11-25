@@ -125,6 +125,9 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
+    /**
+     * @return Client|null
+     */
     public function getClient(): ?Client
     {
         return $this->client;
@@ -144,6 +147,9 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @return Owner|null
+     */
     public function getOwner(): ?Owner
     {
         return $this->owner;

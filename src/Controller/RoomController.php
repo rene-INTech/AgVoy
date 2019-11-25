@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Client;
 use App\Entity\Owner;
 use App\Entity\Room;
+use App\Entity\User;
 use App\Form\RoomType;
 use App\Repository\RoomRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -34,19 +35,19 @@ class RoomController extends AbstractController
     {
         $room = new Room();
         $form = $this->createForm(RoomType::class, $room);
+        $form->remove("owner");
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
             $entityManager = $this->getDoctrine()->getManager();
-            $owner = $user->getClient();
+            $owner = $user->getOwner();
             if(!$owner){ //Si l'utilisateur n'est pas déjà propriétaire
                 $owner = new Owner();
                 $owner->setUser($user);
                 $entityManager->persist($owner);
             }
-
-
+            $room->setOwner($owner);
             $entityManager->persist($room);
             $entityManager->flush();
 
@@ -61,11 +62,20 @@ class RoomController extends AbstractController
 
     /**
      * @Route("/owner/room/list", name="room_show_mines", methods={"GET"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function showMyRooms() :Response {
-        $rooms = $this->getUser()->getOwner()->getRooms();
-        return $this->render('room/backoffice/index.html.twig',[
-            'rooms' => $rooms,
+        $user = $this->getUser();
+        //$rooms = $this->getUser()->getOwner()->getRooms();
+        $rooms = null;
+        if($user){
+            $owner = $user->getOwner();
+            if($owner){
+                $rooms = $owner->getRooms();
+            }
+        }
+        return $this->render('room/frontoffice/mines.html.twig',[
+            'annonces' => $rooms,
         ]);
     }
 
@@ -192,3 +202,4 @@ class RoomController extends AbstractController
         ]);
     }
 }
+

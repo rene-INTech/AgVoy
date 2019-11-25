@@ -4,7 +4,7 @@
 
 {% block content %}
     {% if annonces is empty %}
-        Vous n'avez aucune annonce
+        Vous n'avez déposé aucune annonce
     {% else %}
         <table>
             <tr>
@@ -12,7 +12,7 @@
                     Chambre
                 </th>
             </tr>
-            {% for room in rooms %}
+            {% for room in annonces %}
                 <tr>
                     <td>
                         <a href="{{ path('room_show', {id:room.id}) }}">{{ room.summary }}</a>
@@ -21,4 +21,5 @@
             {% endfor %}
         </table>
     {% endif %}
+    <a href="{{ path('room_new') }}">Déposer une annonce</a>
 {% endblock %}

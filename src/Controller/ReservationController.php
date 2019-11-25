@@ -72,7 +72,8 @@ class ReservationController extends AbstractController
     }
 
     /**
-     * @Route("/my_reservations", name="reservation_show_mines", methods={"GET"})
+     * @Route("/client/reservations", name="reservation_show_mines", methods={"GET"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function showMyReservations() : Response
     {
@@ -84,7 +85,7 @@ class ReservationController extends AbstractController
                 $reservations = $client->getReservations();
             }
         }
-        return $this->render('reservation/frontoffice/list_reservations.html.twig', [
+        return $this->render('mines.twig', [
             'reservations' => $reservations,
         ]);
     }
