@@ -16,7 +16,7 @@
                 {{ nb_rooms }} annonces disponibles
             {% endif %}
         </a>
-        <img src="{{ vich_uploader_asset(regions, imageFile) }}">
+        <img src="{{ vich_uploader_asset(region, 'imageFile') }}" alt="{{ region.imageName }}">
         <br>
     {% endfor %}
 {% endblock %}
