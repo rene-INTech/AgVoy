@@ -20,11 +20,13 @@ class AddAdminCommand extends Command
      * @var $ownersList
      */
     private $usersList;
+    private $manager;
 
     public function __construct(ContainerInterface $container)
     {
         parent::__construct();
-        $this->usersList = $container->get('doctrine')->getManager()->getRepository(User::class);
+        $this->manager = $container->get('doctrine')->getManager();
+        $this->usersList = $this->manager->getRepository(User::class);
     }
 
     protected function configure()
@@ -42,6 +44,8 @@ class AddAdminCommand extends Command
 
         $user = $this->usersList->findOneBy(['username'=>$username]);
         $user->addRole('ROLE_ADMIN');
+        $this->manager->persist($user);
+        $this->manager->flush();
         $io->success($username.' a bien été promu admin!');
     }
 }
