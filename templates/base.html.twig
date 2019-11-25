@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% set background_images = [asset('images/background/montreal.jpg'), asset('images/background/campagne.jpg')] %}
+{% set background_image =random(background_images) %}
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
@@ -36,8 +38,6 @@
             {% endfor %}
         {% endfor %}
     {% endblock %} {# alerts #}
-
-    {% set background_image = asset('images/background/background'~random(1)|e~'.jpg') %}
 
     <div class="container-fluid no-gutters h-100">
         <div class="row h-100">
