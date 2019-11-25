@@ -85,7 +85,7 @@ class ReservationController extends AbstractController
                 $reservations = $client->getReservations();
             }
         }
-        return $this->render('mines.twig', [
+        return $this->render('reservation/frontoffice/mines.twig', [
             'reservations' => $reservations,
         ]);
     }
