@@ -1,8 +1,38 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    Administrateurs
+{% endblock %}
+
 {% block content %}
-    <form>
-    {{ form_widget(form) }}
-        <button type="submit">Ajouter</button>
-    </form>
+    Administrateurs:<br>
+    <ul>
+    {% for admin in admins %}
+        <li>
+            {{ admin.username }} <a href="{{ path('delete_admin', {id: admin.id}) }}">Reléguer</a>
+        </li>
+    {% endfor %}
+    </ul>
+    Utilisateurs non administrateurs:<br>
+    <ul>
+        {% for user in users %}
+            <li>
+                {{ user.username }} <a href="{{ path('add_admin', {id: user.id}) }}">Promouvoir</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <table>
+        <tr>
+            <td class="align-right">Vous pouvez également ajouter un administrateur en appelant la commande: </td>
+            <td><code> bin/console add:admin &lt;username></code></td>
+        </tr>
+        <tr>
+            <td class="align-right">Et consulter la liste des administrateurs avec: </td>
+            <td><code> bin/console list:admins</code></td>
+        </tr>
+        <tr>
+            <td class="align-right">La liste de tous les utilisateurs, avec leurs rôles est donnée par: </td>
+            <td><code> bin/console list:users</code></td>
+        </tr>
+    </table>
 {% endblock %}

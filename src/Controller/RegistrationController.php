@@ -7,6 +7,7 @@ use App\Form\RegistrationFormType;
 use App\Form\UserType;
 use App\Security\LoginFormAuthAuthenticator;
 use Doctrine\DBAL\Types\TextType;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,20 +55,51 @@ class RegistrationController extends AbstractController
     }
 
     /**
-     * @Route("/backoffice/admins", name="list_admin", methods={"GET", "POST"})
+     * @Route("/backoffice/admins", name="list_admin", methods={"GET"})
+     * @return Response
      */
-    public function addAdmin(Request $request) :Response {
-        $formNew = $this->createFormBuilder()
-            ->add('pseudo', UserType::class)
-            ->getForm();
-        $formNew->handleRequest($request);
-        if($formNew->isSubmitted() && $formNew->isValid()){
-            $data = $formNew['pseudo']->getData();
-            $user = $this->getDoctrine()->getRepository(User::class)->findOneBy(['username'=>$data]);
-            $user->addRole('ROLE_ADMIN');
-        }
-        return $this->render('registration/admins.html.twig',[
-            'form' => $formNew->createView(),
-        ]);
+    public function listAdmins() :Response {
+       $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+       $admins = [];
+       $nonAdmins = [];
+       foreach ($users as $admin){
+           if(in_array('ROLE_ADMIN', (array)$admin->getRoles())) {
+               $admins[] = $admin;
+           }else{
+               $nonAdmins[] = $admin;
+           }
+       }
+       return $this->render('registration/admins.html.twig',[
+           'users' => $nonAdmins,
+           'admins' => $admins,
+       ]);
+    }
+
+    /**
+     * @Route("/backoffice/admins/promote/{id}", name="add_admin", methods={"GET"})
+     * @return Response
+     */
+    public function promote($id){
+        $manager = $this->getDoctrine()->getManager();
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        $user->addRole('ROLE_ADMIN');
+        $manager->persist($user);
+        $manager->flush();
+        return $this->redirectToRoute('list_admin');
+    }
+
+    /**
+     * @Route("/backoffice/admins/relegate/{id}", name="delete_admin", methods={"GET"})
+     * @return Response
+     */
+    public function revoke($id){
+        $manager = $this->getDoctrine()->getManager();
+        $user = $this->getDoctrine()->getRepository(User::class)->find($id);
+        $roles = $user->getRoles();
+        $roles = array_diff($roles, array("ROLE_ADMIN"));
+        $user->setRoles($roles);
+        $manager->persist($user);
+        $manager->flush();
+        return $this->redirectToRoute('list_admin');
     }
 }

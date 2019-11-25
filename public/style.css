@@ -21,3 +21,7 @@ footer{
 .form-error{
     background-color: #800000;
 }
+
+.align-right{
+    text-align: right;
+}

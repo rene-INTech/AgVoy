@@ -50,6 +50,13 @@
                 </ul>
             {% endif %}
             <ul class="navbar-nav ml-auto">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('list_admin') }}">Gérer les administrateurs</a>
+                        </li>
+                    </ul>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('room_new') }}">Déposer un annonce</a>
                 </li>
