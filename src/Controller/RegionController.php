@@ -6,9 +6,11 @@ use App\Entity\Region;
 use App\Form\RegionType;
 use App\Repository\RegionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class RegionController extends AbstractController
 {
@@ -62,6 +64,13 @@ class RegionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Change conte-type according to image's
+            $imagefile = $region->getImageFile();
+            if($imagefile) {
+                $mimetype = $imagefile->getMimeType();
+                $region->setContentType($mimetype);
+            }
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($region);
             $entityManager->flush();

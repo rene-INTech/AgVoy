@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
+use App\Entity\Owner;
 use App\Entity\Room;
 use App\Form\RoomType;
 use App\Repository\RoomRepository;
@@ -35,16 +37,35 @@ class RoomController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->getUser();
             $entityManager = $this->getDoctrine()->getManager();
+            $owner = $user->getClient();
+            if(!$owner){ //Si l'utilisateur n'est pas déjà propriétaire
+                $owner = new Owner();
+                $owner->setUser($user);
+                $entityManager->persist($owner);
+            }
+
+
             $entityManager->persist($room);
             $entityManager->flush();
 
-            return $this->redirectToRoute('room_index');
+            return $this->redirectToRoute('room_show_mines');
         }
 
         return $this->render('room/frontoffice/new.html.twig', [
             'room' => $room,
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/owner/room/list", name="room_show_mines", methods={"GET"})
+     */
+    public function showMyRooms() :Response {
+        $rooms = $this->getUser()->getOwner()->getRooms();
+        return $this->render('room/backoffice/index.html.twig',[
+            'rooms' => $rooms,
         ]);
     }
 
