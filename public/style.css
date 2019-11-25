@@ -1,4 +1,4 @@
-body {
+.center {
     background-color: #e6f2ff;
     height: 100vh;
     font: 1.2em "Fira Sans", sans-serif;
@@ -10,12 +10,18 @@ footer{
     font-size:70%;
 }
 
-#left_margin {
-    background-color: #4e555b;
+#left_margin{
+    background-repeat: no-repeat;
+    background-position-x: left;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 #right_margin {
-    background-color: #4e555b;
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .form-error{
