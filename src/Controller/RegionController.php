@@ -61,16 +61,18 @@ class RegionController extends AbstractController
     {
         $region = new Region();
         $form = $this->createForm(RegionType::class, $region);
+        $form->remove("rooms");
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Change conte-type according to image's
-            $imagefile = $region->getImageFile();
-            if($imagefile) {
-                $mimetype = $imagefile->getMimeType();
+            $imageFile = $region->getImageFile();
+/*
+            if($imageFile) {
+                $mimetype = $imageFile->getMimeType();
                 $region->setContentType($mimetype);
             }
-
+*/
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($region);
             $entityManager->flush();

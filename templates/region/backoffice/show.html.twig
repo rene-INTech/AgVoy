@@ -23,6 +23,10 @@
                 <th>Country</th>
                 <td>{{ region.country }}</td>
             </tr>
+            <tr>
+                <th>Image</th>
+                <td><img src="{{ vich_uploader_asset(region, 'imageFile') }}" alt="{{ region.imageName }}"></td>
+            </tr>
         </tbody>
     </table>
 

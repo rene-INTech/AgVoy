@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;//...
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -127,7 +128,7 @@ class Region
     private $imageName;
 
     /**
-     * @Vich\UploadableField(mapping="pastes", fileNameProperty="imageName")
+     * @Vich\UploadableField(mapping="regions", fileNameProperty="imageName")
      * @var File
      */
     private $imageFile;
@@ -148,7 +149,8 @@ class Region
      * during Doctrine hydration.
      */
     /**
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $imageFile
+     * @param File|UploadedFile $imageFile
+     * @throws \Exception
      */
     public function setImageFile(?File $imageFile = null): void
     {
