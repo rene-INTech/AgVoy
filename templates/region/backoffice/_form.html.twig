@@ -1,4 +1,11 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+Nom:<br>
+    {{ form_widget(form.name) }}<br>
+Description:<br>
+    {{ form_widget(form.presentation) }}<br>
+Pays:<br>
+    {{ form_widget(form.country) }}<br>
+Importer une image:<br>
+    {{ form_widget(form.imageFile) }}<br>
+    <button class="btn">{{ button_label|default('Enregistrer') }}</button><br>
 {{ form_end(form) }}

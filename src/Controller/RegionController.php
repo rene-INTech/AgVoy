@@ -62,6 +62,7 @@ class RegionController extends AbstractController
         $region = new Region();
         $form = $this->createForm(RegionType::class, $region);
         $form->remove("rooms");
+        $form->remove("imageName");
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

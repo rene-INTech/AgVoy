@@ -30,15 +30,15 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#">Regions</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="
-                            {% if is_granted('ROLE_ADMIN') %}
-                                {{ path('region_index') }}
-                            {% else %}
-                                {{ path('region_public_index') }}
-                            {% endif %}
-                        ">
+                        <a class="dropdown-item" href="{{ path('region_public_index')}}">
                             Toutes les régions
                         </a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{{ path('region_index') }}">
+                                Editer les régions
+                            </a>
+                        {% endif %}
                     </div>
                 </li>
             </ul>

@@ -1,17 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Region index{% endblock %}
+{% block title %}Liste des régions{% endblock %}
 
-{% block body %}
-    <h1>Region index</h1>
+{% block h1 %}
+    Liste des régions - Vue des administrateurs
+{% endblock %}
 
+{% block content %}
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>Presentation</th>
-                <th>Country</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Pays</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,17 +25,17 @@
                 <td>{{ region.presentation }}</td>
                 <td>{{ region.country }}</td>
                 <td>
-                    <a href="{{ path('region_show', {'id': region.id}) }}">show</a>
-                    <a href="{{ path('region_edit', {'id': region.id}) }}">edit</a>
+                    <a href="{{ path('region_show', {'id': region.id}) }}">voir</a>
+                    <a href="{{ path('region_edit', {'id': region.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Il n'y a aucune région en base de données! Empressez vous d'en créer</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('region_new') }}">Create new</a>
+    <a href="{{ path('region_new') }}">Créer une région</a>
 {% endblock %}
