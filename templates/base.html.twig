@@ -17,72 +17,9 @@
         {% endblock %}
     </head>
     <body>
-    <!-- Barre de menu -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-        <a class="navbar-brand" href="#">Menu</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
-                aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#">Regions</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{ path('region_public_index')}}">
-                            Toutes les régions
-                        </a>
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{ path('region_index') }}">
-                                Editer les régions
-                            </a>
-                        {% endif %}
-                    </div>
-                </li>
-            </ul>
-            {% if is_granted('ROLE_ADMIN') %}
-                <ul class="navbar-nav">
-                    <li style="color: red">
-                        Vous êtes administrateur!
-                    </li>
-                </ul>
-            {% endif %}
-            <ul class="navbar-nav ml-auto">
-                {% if is_granted('ROLE_ADMIN') %}
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('list_admin') }}">Gérer les administrateurs</a>
-                        </li>
-                    </ul>
-                {% endif %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('room_new') }}">Déposer un annonce</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#">Mon Compte</a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ path('liked_rooms') }}">Annonces favorites</a>
-                        {% if is_granted('ROLE_OWNER') %}
-                            <a class="dropdown-item" href="{{ path('room_show_mines') }}">Mes annonces</a>
-                        {% endif %}
-                        {% if is_granted('ROLE_CLIENT') %}
-                            <a class="dropdown-item" href="{{ path('reservation_show_mines')}}">Mes reservations</a>
-                        {% endif %}
-                        <div class="dropdown-divider"></div>
-                        {% if app.user %}
-                            <a class="dropdown-item" href="{{ path('app_logout') }}">Se déconnecter</a>
-                        {% else %}
-                            <a class="dropdown-item" href="{{ path('app_login') }}">Se connecter</a>
-                            <a class="dropdown-item" href="{{ path('app_register') }}">Créer un compte</a>
-                        {% endif %}
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <!-- Fin de la barre de menu-->
+    <!-- Barre de menu -->
+    {{ include('_navbar.html.twig') }}
 
     {%  block alerts %}
         {% for type, messages in app.session.flashBag.all %}
