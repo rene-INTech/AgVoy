@@ -24,9 +24,9 @@
                 <td>{{ region.name }}</td>
                 <td>{{ region.presentation }}</td>
                 <td>{{ region.country }}</td>
-                <td>
-                    <a href="{{ path('region_show', {'id': region.id}) }}">voir</a>
-                    <a href="{{ path('region_edit', {'id': region.id}) }}">modifier</a>
+                <td >
+                    <a class="text-dark" href="{{ path('region_show', {'id': region.id}) }}">voir</a>
+                    <a class="text-dark" href="{{ path('region_edit', {'id': region.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +37,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('region_new') }}">Créer une région</a>
+    <a class="text-dark" href="{{ path('region_new') }}">Créer une région</a>
 {% endblock %}
