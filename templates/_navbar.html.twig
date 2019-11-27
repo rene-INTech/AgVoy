@@ -52,6 +52,9 @@
                     {% endif %}
                     <div class="dropdown-divider"></div>
                     {% if app.user %}
+                        {% if is_granted('ROLE_OWNER') %}
+                            <a class="dropdown-item" href="#">Modifier mon profil</a>
+                        {% endif %}
                         <a class="dropdown-item" href="{{ path('app_logout') }}">Se déconnecter</a>
                     {% else %}
                         <a class="dropdown-item" href="{{ path('app_login') }}">Se connecter</a>

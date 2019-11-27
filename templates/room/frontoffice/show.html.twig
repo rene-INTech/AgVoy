@@ -25,7 +25,7 @@
                 {% endfor %}
                 )
             </li>
-            <li>Propriétaire: {{ room.owner.familyName }} {{ room.owner.firstname }}</li>
+            <li>Propriétaire:<a href="{{ path('owner_show', {'id': room.owner.id}) }}">{{ room.owner.familyName }} {{ room.owner.firstname }}</a></li>
             <li>
 
                 <a href="{{ path('room_like', {id:room.id}) }}">
