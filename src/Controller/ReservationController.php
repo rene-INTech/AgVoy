@@ -18,6 +18,7 @@ class ReservationController extends AbstractController
 {
     /**
      * @Route("/reservation/", name="reservation_index", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function index(ReservationRepository $reservationRepository): Response
     {

@@ -35,7 +35,6 @@ security:
     access_control:
         - { path: ^/backoffice, roles: ROLE_ADMIN }
         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/owner, roles: ROLE_OWNER}
 
         # - { path: ^/profile, roles: ROLE_USER }
 

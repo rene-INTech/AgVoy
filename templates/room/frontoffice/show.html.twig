@@ -5,37 +5,44 @@
 {% block h1 %}{{ room.summary }}{% endblock %}
 
 {% block content %}
-    <ul>
-        {% if room.description is not null %}
-            <li>Description: {{ room.description }}</li>
-        {% endif %}
-        {% if room.superficy is not null %}
-            <li>Superficie: {{ room.superficy }}m²</li>
-        {% endif %}
-        <li>Capacité: {{ room.capacity }} personnes</li>
-        <li>Prix: {{ room.price }}€</li>
-        <li>Adresse: {{ room.address }} (
-            {% for region in room.regions %}
-                {{ region.name }}
-                {% if not loop.last %}
-                    ,
-                {% endif %}
-            {% endfor %}
-            )
-        </li>
-        <li>Propriétaire: {{ room.owner.familyName }} {{ room.owner.firstname }}</li>
-        <li>
+    <div class="row">
+        <div class="col-6">
+        <ul>
+            {% if room.description is not null %}
+                <li>Description: {{ room.description }}</li>
+            {% endif %}
+            {% if room.superficy is not null %}
+                <li>Superficie: {{ room.superficy }}m²</li>
+            {% endif %}
+            <li>Capacité: {{ room.capacity }} personnes</li>
+            <li>Prix: {{ room.price }}€</li>
+            <li>Adresse: {{ room.address }} (
+                {% for region in room.regions %}
+                    {{ region.name }}
+                    {% if not loop.last %}
+                        ,
+                    {% endif %}
+                {% endfor %}
+                )
+            </li>
+            <li>Propriétaire: {{ room.owner.familyName }} {{ room.owner.firstname }}</li>
+            <li>
 
-            <a href="{{ path('room_like', {id:room.id}) }}">
-                {% if liked %}
-                    <img src="{{ asset('images/like/liked.png') }}" alt="Je n'aime plus cette annonce" style="height: 20px; width: 20px">
-                {% else %}
-                    <img src="{{ asset('images/like/unliked.png') }}" alt="J'aime cette annonce" style="height: 20px; width: 20px">
-                {% endif %}
-            </a>
-        </li>
-        <li>
-            <a href="{{ path('room_book', {id:room.id}) }}">Réserver cette chambre</a>
-        </li>
-    </ul>
+                <a href="{{ path('room_like', {id:room.id}) }}">
+                    {% if liked %}
+                        <img src="{{ asset('images/like/liked.png') }}" alt="Je n'aime plus cette annonce" style="height: 20px; width: 20px">
+                    {% else %}
+                        <img src="{{ asset('images/like/unliked.png') }}" alt="J'aime cette annonce" style="height: 20px; width: 20px">
+                    {% endif %}
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('room_book', {id:room.id}) }}">Réserver cette chambre</a>
+            </li>
+        </ul>
+        </div>
+        <div class="col-6">
+            <img src="{{ vich_uploader_asset(room, 'imageFile') }}" alt="{{ room.imageName }}">
+        </div>
+    </div>
 {% endblock %}
