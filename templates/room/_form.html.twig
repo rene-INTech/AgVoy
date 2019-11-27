@@ -13,5 +13,7 @@ Superficie de la chambre:<br>
     {{ form_widget(form.superficy)}}m²<br>
 Nombre de places dans la chambre:<br>
     {{ form_widget(form.capacity) }}personnes<br>
+Ajouter une image:<br>
+    {{ form_widget(form.imageFile) }}<br>
     <button class="btn">{{ button_label|default('Ajouter') }}</button>
 {{ form_end(form) }}

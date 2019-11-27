@@ -13,7 +13,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="App\Repository\RoomRepository")
  * @Vich\Uploadable
  */
-class Room //Todo: add images!
+class Room
 {
     /**
      * @ORM\Id()
