@@ -33,23 +33,28 @@ class RoomController extends AbstractController
      */
     public function new(Request $request): Response
     {
+        $entityManager = $this->getDoctrine()->getManager();
         $room = new Room();
+        $owner = $this->getUser()->getOwner();
+
+        if($owner == null){ //Si l'utilisateur n'est pas déjà propriétaire
+            $owner = new Owner();
+            $entityManager->persist($owner);
+            $entityManager->flush();
+            $this->getUser()->setOwner($owner);
+        }
+
+        $room->setOwner($owner);
         $form = $this->createForm(RoomType::class, $room);
         $form->remove("owner");
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $this->getUser();
-            $entityManager = $this->getDoctrine()->getManager();
-            $owner = $user->getOwner();
-            if(!$owner){ //Si l'utilisateur n'est pas déjà propriétaire
-                $owner = new Owner();
-                $owner->setUser($user);
-                $entityManager->persist($owner);
-            }
-            $room->setOwner($owner);
+
             $entityManager->persist($room);
             $entityManager->flush();
+
+            $this->get('session')->getFlashBag()->add('message', "Votre annonce a bien été ajoutée");
 
             return $this->redirectToRoute('room_show_mines');
         }

@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Owner;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,6 +23,17 @@ class OwnerController extends AbstractController
         return $this->render('owner/show.html.twig',[
             'owner' => $owner,
             'isMe' => $isMe,
+        ]);
+    }
+
+    /**
+     * @Route("/owner", name="owner_show_me",methods={"GET"})
+     * @Security("is_granted('ROLE_OWNER')")
+     * @return Response
+     */
+    public function showMe() : Response{
+        return $this->redirectToRoute('owner_show', [
+            'id' => $this->getUser()->getOwner()->getId(),
         ]);
     }
 
