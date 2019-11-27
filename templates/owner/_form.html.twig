@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+Nom:<br>
+    {{ form_widget(form.familyName) }}<br>
+Prénom:<br>
+    {{ form_widget(form.firstname) }}<br>
+Adresse:<br>
+    {{ form_widget(form.address) }}<br>
+Pays:<br>
+    {{ form_widget(form.country) }}<br>
+Ajouter une photo:<br>
+    {{ form_widget(form.imageFile) }}<br>
+    <button class="btn">{{ button_label|default('Ajouter') }}</button>
+{{ form_end(form) }}

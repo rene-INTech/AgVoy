@@ -1,34 +1,32 @@
 <?php
 
+
 namespace App\Form;
 
-use App\Entity\Room;
+
+use App\Entity\Owner;
+use App\Entity\Region;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class RoomType extends AbstractType
+class OwnerType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('summary')
-            ->add('description')
-            ->add('capacity')
-            ->add('superficy')
-            ->add('price')
+            ->add('familyName')
+            ->add('firstname')
             ->add('address')
-            ->add('regions')
-            ->add('imageFile', VichImageType::class, ['required' => false])
-        ;
+            ->add('country')
+            ->add('imageFile', VichImageType::class, ['required' => false]);;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Room::class,
+            'data_class' => Owner::class,
         ]);
     }
 }
