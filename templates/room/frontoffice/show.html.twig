@@ -45,4 +45,7 @@
             <img src="{{ vich_uploader_asset(room, 'imageFile') }}" alt="{{ room.imageName }}">
         </div>
     </div>
+    {% if isMine %}
+        <a href="{{ path('room_edit', {'id': room.id}) }}">Modifier cette annonce</a>
+    {% endif %}
 {% endblock %}

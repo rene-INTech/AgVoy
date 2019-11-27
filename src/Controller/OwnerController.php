@@ -64,7 +64,4 @@ class OwnerController extends AbstractController
             'id' => $this->getUser()->getOwner()->getId(),
         ]);
     }
-
-
-
 }

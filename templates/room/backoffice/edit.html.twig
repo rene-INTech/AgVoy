@@ -7,7 +7,11 @@
 
     {{ include('room/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('room_index') }}">back to list</a>
-
     {{ include('room/backoffice/_delete_form.html.twig') }}
+
+    {% if proprio %}
+        <a href="{{ path('public_room_show', {'id': room.id}) }}">Retour à l'annonce</a>
+    {% else %}
+        <a href="{{ path('room_index') }}">Retour à la liste</a>
+    {% endif %}
 {% endblock %}

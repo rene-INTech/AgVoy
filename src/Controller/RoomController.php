@@ -13,12 +13,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RoomController extends AbstractController
 {
     /**
      * @Route("/backoffice/room/", name="room_index", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN')")
+     * @param RoomRepository $roomRepository
+     * @return Response
      */
     public function index(RoomRepository $roomRepository): Response
     {
@@ -30,6 +34,8 @@ class RoomController extends AbstractController
     /**
      * @Route("/owner/room/new", name="room_new", methods={"GET","POST"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -86,9 +92,16 @@ class RoomController extends AbstractController
 
     /**
      * @Route("/owner/room/{id}", name="room_show", methods={"GET"})
+     * @Security("is_granted('ROLE_OWNER')")
      */
     public function show(Room $room): Response
     {
+        $admin = in_array('ROLE_ADMIN', $this->getUser()->getRoles());
+        $proprio = $this->getUser()->getOwner() === $room->getOwner();
+        if(!$admin && !$proprio){
+            return new BadRequestHttpException("Vous n'avez pas le droit de modifier cette annonce");
+        }
+
         return $this->render('room/backoffice/show.html.twig', [
             'room' => $room,
         ]);
@@ -96,9 +109,15 @@ class RoomController extends AbstractController
 
     /**
      * @Route("/owner/room/{id}/edit", name="room_edit", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_OWNER')")
      */
     public function edit(Request $request, Room $room): Response
     {
+        $admin = in_array('ROLE_ADMIN', $this->getUser()->getRoles());
+        $proprio = $this->getUser()->getOwner() === $room->getOwner();
+        if(!$admin && !$proprio){
+            return new BadRequestHttpException("Vous n'avez pas le droit de modifier cette annonce");
+        }
         $form = $this->createForm(RoomType::class, $room);
         $form->handleRequest($request);
 
@@ -111,14 +130,22 @@ class RoomController extends AbstractController
         return $this->render('room/backoffice/edit.html.twig', [
             'room' => $room,
             'form' => $form->createView(),
+            'proprio' => $proprio,
         ]);
     }
 
     /**
-     * @Route("/{id}", name="room_delete", methods={"DELETE"})
+     * @Route("/owner/room/{id}", name="room_delete", methods={"DELETE"})
+     * @Security("is_granted('ROLE_OWNER')")
      */
     public function delete(Request $request, Room $room): Response
     {
+        $admin = in_array('ROLE_ADMIN', $this->getUser()->getRoles());
+        $proprio = $this->getUser()->getOwner() === $room->getOwner();
+        if(!$admin && !$proprio){
+            return new BadRequestHttpException("Vous n'avez pas le droit de supprimer cette annonce");
+        }
+
         if ($this->isCsrfTokenValid('delete'.$room->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($room);
@@ -127,18 +154,6 @@ class RoomController extends AbstractController
 
         return $this->redirectToRoute('room_index');
     }
-
-//    /**
-//     * @Route("/owner/room/{id}", name="room_show")
-//     * @param $id
-//     * @return Response
-//     */
-//    public function showRoom($id) //Affiche les caractéristiques d'une chambre visibles par son propriétaire
-//    {
-//        return $this->render('room/private.html.twig', [
-//            'room' => $this->getDoctrine()->getRepository(Room::class)->find($id),
-//        ]);
-//    }
 
     /**
      * @Route("/room/like/{id}", name="room_like")
@@ -194,6 +209,14 @@ class RoomController extends AbstractController
     public function showRoomPublic($id) //Affiche les caractéristiques d'une chambre pour le public
     {
         $room = $this->getDoctrine()->getRepository(Room::class)->find($id);
+        $user = $this->getUser();
+        $isMine = false;
+        if($user){
+            $owner = $user->getOwner();
+            if($owner){
+                $isMine = $owner === $room->getOwner();
+            }
+        }
         $likes = $this->get('session')->get('likes');
         if( $likes != null) {
             $liked = in_array($id, $likes);
@@ -204,6 +227,7 @@ class RoomController extends AbstractController
         return $this->render('room/frontoffice/show.html.twig', [
             'room' => $room,
             'liked' => $liked,
+            'isMine' => $isMine,
         ]);
     }
 }
