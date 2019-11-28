@@ -96,7 +96,7 @@ class Room
 
     public function __toString()
     {
-        return $this->address." ".$this->price."€ (".$this->owner.")";
+        return $this->getDescription()." ".$this->price."€ (".$this->owner.")";
     }
 
     public function getId(): ?int
