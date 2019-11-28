@@ -7,45 +7,53 @@
 {% block content %}
     <div class="row">
         <div class="col-6">
-        <ul>
-            {% if room.description is not null %}
-                <li>Description: {{ room.description }}</li>
-            {% endif %}
-            {% if room.superficy is not null %}
-                <li>Superficie: {{ room.superficy }}m²</li>
-            {% endif %}
-            <li>Capacité: {{ room.capacity }} personnes</li>
-            <li>Prix: {{ room.price }}€</li>
-            <li>Adresse: {{ room.address }} (
-                {% for region in room.regions %}
-                    {{ region.name }}
-                    {% if not loop.last %}
-                        ,
-                    {% endif %}
-                {% endfor %}
-                )
-            </li>
-            <li>Propriétaire:<a href="{{ path('owner_show', {'id': room.owner.id}) }}">{{ room.owner.familyName }} {{ room.owner.firstname }}</a></li>
-            <li>
+            <ul>
+                {% if room.description is not null %}
+                    <li>Description: {{ room.description }}</li>
+                {% endif %}
+                {% if room.superficy is not null %}
+                    <li>Superficie: {{ room.superficy }}m²</li>
+                {% endif %}
+                <li>Capacité: {{ room.capacity }} personnes</li>
+                <li>Prix: {{ room.price }}€</li>
+                <li>Adresse: {{ room.address }} (
+                    {% for region in room.regions %}
+                        {{ region.name }}
+                        {% if not loop.last %}
+                            ,
+                        {% endif %}
+                    {% endfor %}
+                    )
+                </li>
+                <li>Propriétaire:
+                    <a href="{{ path('owner_show', {'id': room.owner.id}) }}">
+                        {% if(room.owner.familyName is not null or room.owner.firstname is not null) %}
+                            {{ room.owner.familyName }} {{ room.owner.firstname }}
+                        {% else %}
+                            {{ room.owner.user.username }}
+                        {% endif %}
+                    </a>
+                </li>
+                <li>
 
-                <a href="{{ path('room_like', {id:room.id}) }}">
-                    {% if liked %}
-                        <img src="{{ asset('images/like/liked.png') }}" alt="Je n'aime plus cette annonce" style="height: 20px; width: 20px">
-                    {% else %}
-                        <img src="{{ asset('images/like/unliked.png') }}" alt="J'aime cette annonce" style="height: 20px; width: 20px">
-                    {% endif %}
-                </a>
-            </li>
-            <li>
-                <a href="{{ path('room_book', {id:room.id}) }}">Réserver cette chambre</a>
-            </li>
-        </ul>
+                    <a href="{{ path('room_like', {id:room.id}) }}">
+                        {% if liked %}
+                            <img src="{{ asset('images/like/liked.png') }}" alt="Je n'aime plus cette annonce" style="height: 20px; width: 20px">
+                        {% else %}
+                            <img src="{{ asset('images/like/unliked.png') }}" alt="J'aime cette annonce" style="height: 20px; width: 20px">
+                        {% endif %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('room_book', {id:room.id}) }}">Réserver cette chambre</a>
+                </li>
+            </ul>
         </div>
         <div class="col-6">
             <img src="{{ vich_uploader_asset(room, 'imageFile') }}" alt="{{ room.imageName }}">
         </div>
     </div>
-    {% if isMine %}
+    {% if isMine or is_granted('ROLE_ADMIN') %}
         <a href="{{ path('room_edit', {'id': room.id}) }}">Modifier cette annonce</a>
     {% endif %}
 {% endblock %}

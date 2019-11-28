@@ -17,6 +17,7 @@
 
             <link href="{{ asset('style.css') }}" rel="stylesheet"/>
         {% endblock %}
+        <link rel="icon" href="{{ asset('images/rbnb.ico') }}">
     </head>
     <body>
 
@@ -39,7 +40,7 @@
         {% endfor %}
     {% endblock %} {# alerts #}
 
-    <div class="container-fluid no-gutters h-100">
+    <div class="container-fluid no-gutters h-100" id="wrapper">
         <div class="row h-100">
             <div class="col-2" id="left_margin" style="background-image: url('{{ asset(background_image|e) }}');"></div>
             <div class="col center">

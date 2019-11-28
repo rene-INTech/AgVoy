@@ -8,16 +8,16 @@ La liste des chambres au format `description prix (propriétaire)` est obtenue a
 bin/console list:rooms
 ```
 
-###Liste des administrateurs
-La liste des administrateurs est donnée par la commande 
-```bash
-bin/console list:admins
-```
 
 ###Liste des utilisateurs
 La liste des utilisateurs, avec leurs rôles au format `username: roles` est obtenue avec la commande
 ```bash
 bin/console list:users
+```
+###Liste des administrateurs
+La liste des administrateurs est donnée par la commande 
+```bash
+bin/console list:admins
 ```
 
 ###Ajouter un administrateur
