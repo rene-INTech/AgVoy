@@ -17,17 +17,28 @@
                 <th>
                     Date de sortie
                 </th>
+                <th>
+                    Actions
+                </th>
             </tr>
             {% for reservation in reservations %}
                 <tr>
                     <td>
-                        <a href="{{ path('public_room_show', {id:reservation.room.id}) }}">{{ reservation.room.summary }}</a>
+                        <a class="text-dark" href="{{ path('public_room_show', {id:reservation.room.id}) }}">{{ reservation.room.summary }}</a>
                     </td>
                     <td>
                         {{ reservation.dateDebut|date("m/d/Y H:i") }}
                     </td>
                     <td>
                         {{ reservation.dateFin|date("m/d/Y H:i") }}
+                    </td>
+                    <td>
+                        <form method="post" action="{{ path('reservation_delete', {'id': reservation.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reservation.id) }}">
+                            <button class="btn btn-dark">Supprimer</button>
+                            <a href="{{ path('reservation_edit', {'id': reservation.id}) }}" class="text-dark">Modifier</a>
+                        </form>
                     </td>
                 </tr>
             {% endfor %}

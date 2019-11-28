@@ -1,13 +1,77 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Reservation{% endblock %}
+{% block title %}Modifier la reservation{% endblock %}
 
-{% block body %}
-    <h1>Edit Reservation</h1>
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
+{% endblock %}
 
-    {{ include('reservation/_form.html.twig', {'button_label': 'Update'}) }}
+{% block h1 %}Modifier la réservation{% endblock %}
 
-    <a href="{{ path('reservation_index') }}">back to list</a>
+{% block content %}
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Durée de la réservation:</span>
+        </div>
+        <input type="text" name="daterange"/>
+    </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                Nombre de places:
+            </span>
+        </div>
+        <input type="number" id="nbPlaces"/><br>
+    </div>
+    <br>
+    <button id="book" class="btn btn-dark btn-lg">Enregistrer</button>
+    <a class="text-dark" href="{{ path('reservation_show_mines') }}">Annuler</a>
+{% endblock %}
 
-    {{ include('reservation/_delete_form.html.twig') }}
+{% block javascripts %}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script>
+        $(function () {
+            var startDate = moment();
+            var endDate = moment();
+            let nbPlaces = 0;
+            $("#book").on('click', function () {
+                var start = startDate.format("YYYY-MM-DD");
+                var end = endDate.format("YYYY-MM-DD");
+                let places = nbPlaces;
+                $.ajax({
+                    method: "POST",
+                    url: "{{ path('reservation_edit', { "id": reservation.id }) }}",
+                    data: {
+                        start: start,
+                        end: end,
+                        places: document.getElementById("nbPlaces").value,
+                    },
+                    success: function (response, text, e) {
+                        if (e.status === 200) {
+                            window.location.href = "{{ path('reservation_show_mines') }}";
+                        }
+                    },
+                    error: function (e) {
+                        var contents = e.responseJSON;
+                        var errorFlash = $("<div>");
+                        errorFlash.addClass("flash-error");
+                        errorFlash.html(contents.error);
+                        $("#flashContainer").append(errorFlash);
+                    }
+                })
+            });
+            $('input[name="daterange"]').daterangepicker({
+                "opens": 'left',
+                "locale": {
+                    "format": 'DD/MM/YYYY',
+                }
+            }, function (start, end, label) {
+                startDate = start;
+                endDate = end;
+            });
+        });
+    </script>
 {% endblock %}

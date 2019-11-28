@@ -107,6 +107,23 @@ class ReservationController extends AbstractController
     }
 
     /**
+     * @Route("/reservation/{id}", name="reservation_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, Reservation $reservation): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $reservation->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($reservation);
+            $entityManager->flush();
+        }
+
+        if(in_array('ROLE_ADMIN', $this->getUser()->getRoles())){
+            return $this->redirectToRoute('reservation_index');
+        }
+        return $this->redirectToRoute('reservation_show_mines');
+    }
+
+    /**
      * @Route("/reservation/{id}", name="reservation_show", methods={"GET"})
      */
     public function show(Reservation $reservation): Response
@@ -134,19 +151,5 @@ class ReservationController extends AbstractController
             'reservation' => $reservation,
             'form' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @Route("/reservation/{id}", name="reservation_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, Reservation $reservation): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $reservation->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($reservation);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('reservation_index');
     }
 }
