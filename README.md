@@ -32,4 +32,7 @@ bin/console add:admin <username>
  - LAMIAUX Rémi
 
 ## Depot du projet
-Tous les fichiers de ce projet sont accessibles librement depuis le depot publique [github](https://www.github.com/rene-INTech/AgVoy.git)
+Tous les fichiers de ce projet sont accessibles librement depuis le depot public [github](https://www.github.com/rene-INTech/AgVoy.git)
+
+## Data fixtures
+TODO: compléter en précisant les données chargées dans la base de données
