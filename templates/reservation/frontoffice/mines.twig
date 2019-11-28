@@ -6,7 +6,8 @@
     {% if reservations is empty %}
         Vous n'avez aucune réservation
     {% else %}
-        <table>
+
+        <table style="text-align: center" class="container-fluid">
             <tr>
                 <th>
                     Chambre
@@ -16,6 +17,9 @@
                 </th>
                 <th>
                     Date de sortie
+                </th>
+                <th>
+                    Nombre de places:
                 </th>
                 <th>
                     Actions
@@ -31,6 +35,9 @@
                     </td>
                     <td>
                         {{ reservation.dateFin|date("m/d/Y H:i") }}
+                    </td>
+                    <td>
+                        {{ reservation.nbPersonnes }}
                     </td>
                     <td>
                         <form method="post" action="{{ path('reservation_delete', {'id': reservation.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
