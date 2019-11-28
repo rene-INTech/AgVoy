@@ -42,8 +42,8 @@ class RoomController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $room = new Room();
         $owner = $this->getUser()->getOwner();
-
-        if($owner == null){ //Si l'utilisateur n'est pas déjà propriétaire
+        $newOwner = $owner == null;
+        if($newOwner){ //Si l'utilisateur n'est pas déjà propriétaire
             $owner = new Owner();
             $entityManager->persist($owner);
             $entityManager->flush();
@@ -61,6 +61,9 @@ class RoomController extends AbstractController
             $entityManager->flush();
 
             $this->get('session')->getFlashBag()->add('message', "Votre annonce a bien été ajoutée");
+            if($newOwner){
+                $this->get('session')->getFlashBag()->add('message', 'Un profil de propriétaire vierge vient de vous être créé. Venez le compléter <a href="/owner/edit">ici</a>');
+            }
 
             return $this->redirectToRoute('room_show_mines');
         }

@@ -2,7 +2,13 @@
 
 {% block title %}{{owner.familyName}}{% endblock %}
 
-{% block h1 %}{{ owner.familyName~" "~owner.firstName  }}{% endblock %}
+{% block h1 %}
+    {% if owner.firstname is not null and owner.familyName is not null%}
+        {{ owner.firstname~' '~owner.familyName }}
+    {% else %}
+        Nom non renseigné
+    {% endif %}
+{% endblock %}
 
 {% block content %}
     <div class="row">
