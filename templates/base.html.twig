@@ -9,13 +9,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
+
             <!-- Bootstrap core CSS -->
             <link href="{{ asset('startbootstrap-shop-homepage-gh-pages/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
             <!-- Custom styles for this template -->
             <link href="{{ asset('startbootstrap-shop-homepage-gh-pages/css/shop-homepage.css') }}" rel="stylesheet">
 
             <link href="{{ asset('style.css') }}" rel="stylesheet"/>
+        {% block stylesheets %}
         {% endblock %}
         <link rel="icon" href="{{ asset('images/rbnb.ico') }}">
     </head>
@@ -68,10 +69,11 @@
             &copy; <a class="btn-dark" href="mailto:flore.vatre@telecom-sudparis.eu">VATRE Flore</a>, <a class="btn-dark" href="mailto:remi.lamiaux@telecom-sudparis.eu">LAMIAUX Rémi</a>, Septembre-Novembre 2019
         </footer>
     </div>
-    {% block javascripts %}
+
         <!-- Bootstrap core JavaScript -->
         <script src="{{ asset('startbootstrap-shop-homepage-gh-pages/vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('startbootstrap-shop-homepage-gh-pages/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    {% block javascripts %}
     {% endblock %}
     </body>
 </html>

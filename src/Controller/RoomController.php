@@ -187,7 +187,7 @@ class RoomController extends AbstractController
      * @return RedirectResponse
      */
     public function book($id){
-        return $this->redirectToRoute('reservation_new', [
+        return $this->redirectToRoute('reservation_new_get', [
             'id_room'=>$id,
         ]);
     }

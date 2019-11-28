@@ -7,6 +7,7 @@ use App\Entity\Reservation;
 use App\Entity\Room;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
+use DateTime;
 use Doctrine\DBAL\Types\DateTimeType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,7 +29,7 @@ class ReservationController extends AbstractController
     }
 
     /**
-     * @Route("/reservation/new/{id_room}", name="reservation_new", methods={"GET","POST"})
+     * @Route("/reservation/new/{id_room}", name="reservation_new_get", methods={"GET"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param Request $request
      * @param $id_room
@@ -36,39 +37,53 @@ class ReservationController extends AbstractController
      */
     public function new(Request $request, $id_room): Response
     {
+        $reservation = new Reservation();
+        $room = $this->getDoctrine()->getRepository(Room::class)->find($id_room);
+
+        return $this->render('reservation/new.html.twig', [
+            'reservation' => $reservation,
+            'room' => $room,
+        ]);
+    }
+
+    /**
+     * @Route("/reservation/new/{id_room}", name="reservation_new_post", methods={"POST"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @param Request $request
+     * @param $id_room
+     * @return Response
+     */
+    public function newPost(Request $request, $id_room): Response
+    {
         $entityManager = $this->getDoctrine()->getManager();
         $reservation = new Reservation();
-        $reservation->setRoom($this->getDoctrine()->getRepository(Room::class)->find($id_room));
+        $room = $this->getDoctrine()->getRepository(Room::class)->find($id_room);
         $client = $this->getUser()->getClient();
 
         //Si l'utilisateur n'est pas déjà client, il le devient
-        if($client == null){
+        if ($client == null) {
             $client = new Client();
             $entityManager->persist($client);
             $entityManager->flush();
             $this->getUser()->setClient($client);
         }
+
+        $start = $request->request->get('start');
+        $end = $request->request->get('end');
+        $startTime = DateTime::createFromFormat('Y-m-d', $start);
+        $endTime = DateTime::createFromFormat('Y-m-d', $end);
+
+        $reservation->setRoom($room);
         $reservation->setClient($client);
-        $form = $this->createForm(ReservationType::class, $reservation);
-        $form->remove('room');
-        $form->remove('client');
-        $form->handleRequest($request);
+        $reservation->setDateDebut($startTime);
+        $reservation->setDateFin($endTime);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $entityManager->persist($reservation);
+        $entityManager->flush();
+        $this->get('session')->getFlashBag()->add('message', "Votre réservation a bien été prise en compte");
 
-            $entityManager->persist($reservation);
-            $entityManager->flush();
-
-            $this->get('session')->getFlashBag()->add('message', "Votre réservation a bien été prise en compte");
-
-            return $this->redirectToRoute('public_room_show', [
-                'id'=>$id_room,
-            ]);
-        }
-
-        return $this->render('reservation/new.html.twig', [
-            'reservation' => $reservation,
-            'form' => $form->createView(),
+        return $this->redirectToRoute('public_room_show', [
+            'id' => $id_room,
         ]);
     }
 
@@ -76,13 +91,13 @@ class ReservationController extends AbstractController
      * @Route("/client/reservations", name="reservation_show_mines", methods={"GET"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
-    public function showMyReservations() : Response
+    public function showMyReservations(): Response
     {
         $user = $this->getUser();
         $reservations = null;
-        if($user){
+        if ($user) {
             $client = $user->getClient();
-            if($client){
+            if ($client) {
                 $reservations = $client->getReservations();
             }
         }
@@ -126,7 +141,7 @@ class ReservationController extends AbstractController
      */
     public function delete(Request $request, Reservation $reservation): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$reservation->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $reservation->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($reservation);
             $entityManager->flush();
