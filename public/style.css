@@ -39,6 +39,7 @@ footer{
 body {
     font-size: medium;
     font-family: "Arial", serif;
+    opacity:1;
 
 }
 
@@ -47,5 +48,6 @@ h1{
     font-family: " Trebuchet MS", "Times New Roman", serif;
 	font-weight: bold;
 	text-decoration: underline;
-	color:navy;
+
+	opacity: 1;
 }

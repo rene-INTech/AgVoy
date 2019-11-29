@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Modifier le profil{% endblock %}
+{% block h1 %}Modifier le profil{% endblock %}
 
-{% block body %}
-    <h1>Modification du profil</h1>
+{% block content %}
 
     {{ include('owner/_form.html.twig', {'button_label': 'Enregistrer'}) }}
 

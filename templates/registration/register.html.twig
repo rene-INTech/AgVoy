@@ -1,10 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
-
-{% block body %}
-    <br>
-    <h1>Création de compte</h1>
+{% block title %}Creation de compte{% endblock %}
+{% block h1 %}Creation de compte{% endblock %}
+{% block content %}
 
     {{ form_start(registrationForm) }}
     {{ form_widget(registrationForm.username, {'attr': {'class': 'form-control', 'placeholder': 'Pseudo'}}) }}
