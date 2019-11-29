@@ -42,8 +42,9 @@
     {% endblock %} {# alerts #}
 
     <div class="container-fluid no-gutters h-100" id="wrapper">
-        <div class="row h-100">
-            <div class="col-2" id="left_margin" style="background-image: url('{{ asset(background_image|e) }}');"></div>
+        <div class="row h-100" style="background-image: url('{{ asset(background_image|e) }}');">
+        
+            <div class="col-2" id="left_margin" ></div>
             <div class="col center">
                 {% block body %}
                     <div class="row">

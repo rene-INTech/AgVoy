@@ -3,7 +3,8 @@
     height: 100vh;
     font: 1.2em "Fira Sans", sans-serif;
     line-height: 1.8em;
-    opacity: 0.3;
+    opacity: 0.6;
+    
 }
 
 footer{
@@ -46,6 +47,7 @@ footer{
 body {
     font-size: medium;
     font-family: "Arial", serif;
+    opacity:1;
 
 }
 
@@ -55,6 +57,9 @@ h1{
 	font-weight: bold;
 	text-decoration: underline;
 	color:navy;
+	border: 6px teal double;
+	opacity: 1;
 	
 	
 }
+
