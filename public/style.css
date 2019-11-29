@@ -3,6 +3,7 @@
     height: 100vh;
     font: 1.2em "Fira Sans", sans-serif;
     line-height: 1.8em;
+    opacity: 0.3;
 }
 
 footer{
@@ -53,6 +54,7 @@ h1{
     font-family: " Trebuchet MS", "Times New Roman", serif;
 	font-weight: bold;
 	text-decoration: underline;
+	color:navy;
 	
 	
 }
