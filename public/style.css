@@ -44,12 +44,12 @@ footer{
 
 body {
     font-size: medium;
-    font-family: Arial, serif;
+    font-family: "Arial", serif;
 
 }
 
 h1{
-	font-size: large;
+	font-size: xx-large;
     font-family: " Trebuchet MS", "Times New Roman", serif;
 	font-weight: bold;
 	text-decoration: underline;
