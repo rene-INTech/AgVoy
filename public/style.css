@@ -42,15 +42,15 @@ footer{
     transition: opacity 1s ease, filter 1s ease;
 }
 
-body{
-	font-size: medium;
-	font-family: Arial;
-	
+body {
+    font-size: medium;
+    font-family: Arial, serif;
 
+}
 
 h1{
 	font-size: large;
-	font-family:" Trebuchet MS", "Times New Roman";
+    font-family: " Trebuchet MS", "Times New Roman", serif;
 	font-weight: bold;
 	text-decoration: underline;
 	
