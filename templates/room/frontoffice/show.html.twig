@@ -26,7 +26,7 @@
                     )
                 </li>
                 <li>Propriétaire:
-                    <a href="{{ path('owner_show', {'id': room.owner.id}) }}">
+                    <a class="text-dark" href="{{ path('owner_show', {'id': room.owner.id}) }}">
                         {% if(room.owner.familyName is not null or room.owner.firstname is not null) %}
                             {{ room.owner.familyName }} {{ room.owner.firstname }}
                         {% else %}
@@ -45,7 +45,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ path('room_book', {id:room.id}) }}">Réserver cette chambre</a>
+                    <a class="text-dark" href="{{ path('room_book', {id:room.id}) }}">Réserver cette chambre</a>
                 </li>
             </ul>
         </div>
@@ -54,6 +54,29 @@
         </div>
     </div>
     {% if isMine or is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('room_edit', {'id': room.id}) }}">Modifier cette annonce</a>
+        <span class="container-fluid">
+            <a href="{{ path('room_edit', {'id': room.id}) }}" class="text-dark">Modifier cette annonce</a><br>
+        </span>
     {% endif %}
+    <div class="col">
+        Réservations:
+        {% if room.reservations is null %}
+            Aucune réservation pour cette chambre
+        {% else %}
+            <table class="container-fluid table-bordered table-dark" >
+                <tr>
+                <th>Date début</th>
+                <th>Date fin</th>
+                    <th>réservant</th>
+                </tr>
+            {% for reservation in room.reservations %}
+                <tr>
+                    <td>{{ reservation.dateDebut|date('Y-m-d') }}</td>
+                    <td>{{ reservation.dateFin|date('Y-m-d') }}</td>
+                    <td>{{ reservation.client.user.username }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        {% endif %}
+    </div>
 {% endblock %}
