@@ -14,7 +14,7 @@
                 {% if room.superficy is not null %}
                     <li>Superficie: {{ room.superficy }}m²</li>
                 {% endif %}
-                <li>Capacité: {{ room.capacity }} personnes</li>
+                <li>Capacité: {{ room.capacity }} personne{%  if room.capacity > 1 %}s{% endif %}</li>
                 <li>Prix: {{ room.price }}€</li>
                 <li>Adresse: {{ room.address }} (
                     {% for region in room.regions %}
