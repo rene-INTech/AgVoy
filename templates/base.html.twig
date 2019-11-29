@@ -42,8 +42,8 @@
     {% endblock %} {# alerts #}
 
     <div class="container-fluid no-gutters h-100" id="wrapper">
-        <div class="row h-100">
-            <div class="col-2" id="left_margin" style="background-image: url('{{ asset(background_image|e) }}');"></div>
+        <div class="row h-100" id="background" style="background-image: url('{{ asset(background_image|e) }}');">
+            <div class="col-2"></div>
             <div class="col center">
                 {% block body %}
                     <div class="row">
@@ -63,7 +63,7 @@
                     </div>
                 {% endblock %}
             </div>
-            <div class="col-2" id="right_margin" style="background-image: url('{{ background_image }}')"></div>
+            <div class="col-2"></div>
         </div>
         <footer class="bg-dark fixed-bottom text-right">
             &copy; <a class="btn-dark" href="mailto:flore.vatre@telecom-sudparis.eu">VATRE Flore</a>, <a class="btn-dark" href="mailto:remi.lamiaux@telecom-sudparis.eu">LAMIAUX Rémi</a>, Septembre-Novembre 2019
