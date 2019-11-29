@@ -42,17 +42,17 @@ footer{
     transition: opacity 1s ease, filter 1s ease;
 }
 
-body.is-loading #wrapper {
-    opacity: 0;
-    /*-moz-filter: blur(1px);*/
-    -webkit-filter: blur(1px);
-    -ms-filter: blur(1px);
-    filter: blur(1px);
-}
+body{
+	font-size: medium;
+	font-family: Arial;
+	
 
-body.is-covered #wrapper {
-    /*-moz-filter: blur(3px);*/
-    -webkit-filter: blur(3px);
-    -ms-filter: blur(3px);
-    filter: blur(3px);
+
+h1{
+	font-size: large;
+	font-family:" Trebuchet MS", "Times New Roman";
+	font-weight: bold;
+	text-decoration: underline;
+	
+	
 }
